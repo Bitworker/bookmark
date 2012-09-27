@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Linkarchiv</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="header-wrapper">
+  <div id="header">
+    <h1><%= link_to "Bookmarks on Rails", root_path %></h1>
+    <div id="profile">
+      <% if user_signed_in? %>
+        <%= link_to current_user.email, current_user, :id => "user-profile" %> |
+        <%= link_to "Logout", destroy_user_session_path, :id => "logout" %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, :id => "sign-in" %> |
+        <%= link_to "Registrierung", new_user_registration_path, :id => "register" %>
+      <% end %>
+    </div>
+    <br class="clear" />
+  </div>
+</div>
+<div id="main">
+  <div id="content">
+    <%= yield %>
+    <% if flash.present? %>
+        <div id="flash">
+          <% flash.each do |type, message| -%>
+            <div class="message <%= type %>">
+              <%= message %>
+            </div>
+          <% end -%>
+        </div>
+    <% end -%>
+  </div>
+  <div id="sidebar">
+    <%= yield :sidebar %>
+  </div>
+</div>
+<%= javascript_include_tag "application" %>
+</body>
+</html>
